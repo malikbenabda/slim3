@@ -1,13 +1,13 @@
 <?php
 namespace App\Action;
 
-use App\Resource\EmployerResource;
+use App\Resource\PersonneResource;
 
-final class EmployerAction
+final class PersonneAction
 {
     private $employerResource;
 
-    public function __construct(EmployerResource $employerResource)
+    public function __construct(PersonneResource $employerResource)
     {
         $this->employerResource = $employerResource;
     }

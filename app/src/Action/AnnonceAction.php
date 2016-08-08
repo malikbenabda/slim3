@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Action;
 
+use App\Entity\Annonce;
 use App\Resource\AnnonceResource;
+use Doctrine\ORM\EntityManager;
 
 final class AnnonceAction
 {
@@ -111,10 +112,129 @@ final class AnnonceAction
 
 
 
+    public function add($request, $response, $args)
+    {
+        $post = $request->getParsedBody();
+        $tmp= new Annonce();
+
+        if ( isset($post["annoncestate"])){
+            $tmp->setAnnoncestate($post["annoncestate"]);
+        }
+        if ( isset($post["coords"])){
+            $tmp->setCoords($post["coords"]);
+        }
+        if ( isset($post["titre"])){
+            $tmp->setTitre($post["titre"]);
+        }
+        if ( isset($post["description"])){
+            $tmp->setDescription($post["description"]);
+        }
+        if ( isset($post["type"])){
+            $tmp->setType($post["type"]);
+        }
+        if ( isset($post["city"])){
+            $tmp->setCity($post["city"]);
+        }
+        if ( isset($post["rooms"])){
+            $tmp->setRooms($post["rooms"]);
+        }
+        if ( isset($post["prixtotal"])){
+            $tmp->setPrixtotal($post["prixtotal"]);
+        }
+        if ( isset($post["extra"])){
+            $tmp->setExtra($post["extra"]);
+        }
+
+        $this->annonceResource->insert($tmp);
+        return $response->withJSON("success");
+
+    }
+
+
+
     public function update($request, $response, $args)
     {
         $post = $request->getParsedBody();
-        $id = $post["id"];
+        $tmp= new Annonce();
 
+        if ( isset($post["idannonce"])){
+        $tmp->setIdannonce($post["idannonce"]);
+        $key=array("idannonce" =>$post["idannonce"]);
+
+            if ( isset($post["annoncestate"])){
+                $tmp->setAnnoncestate($post["annoncestate"]);
+            }
+            if ( isset($post["coords"])){
+                $tmp->setCoords($post["coords"]);
+            }
+            if ( isset($post["titre"])){
+                $tmp->setTitre($post["titre"]);
+            }
+            if ( isset($post["type"])){
+                $tmp->setType($post["type"]);
+            }
+            if ( isset($post["city"])){
+                $tmp->setCity($post["city"]);
+            }
+            if ( isset($post["rooms"])){
+                $tmp->setRooms($post["rooms"]);
+            }
+            if ( isset($post["prixtotal"])){
+                $tmp->setPrixtotal($post["prixtotal"]);
+            }
+
+
+
+            $this->annonceResource->update($tmp , $key= null);
+            return $response->withJSON(" update success");
+
+        }else {return $response->withStatus(405, 'No idannonce was passed.');}
+
+
+
+    }
+
+    public function remove($request, $response, $args)
+    {
+        $post = $request->getParsedBody();
+        $slug = array();
+
+        if ( isset($post["idannonce"])){
+            $slug = array("idannonce" =>$post["idannonce"] );
+        } else  return $response->withStatus(405, 'No idannonce was passed.');
+
+       /*     {
+
+        if ( isset($post["annoncestate"])){
+            $slug += array("annoncestate" =>$post["annoncestate"] );
+        }
+
+        if ( isset($post["coords"])){
+            $slug += array("coords" =>$post["coords"] );
+        }
+
+        if ( isset($post["titre"])){
+            $slug += array("titre" =>$post["titre"] );
+        }
+        if ( isset($post["type"])){
+            $slug += array("type" =>$post["type"] );
+        }
+        if ( isset($post["city"])){
+            $slug += array("city" =>$post["city"] );
+        }
+        if ( isset($post["rooms"])){
+            $slug += array("rooms" =>$post["rooms"] );
+        }
+        if ( isset($post["prixtotal"])){
+            $slug += array("prixtotal" =>$post["prixtotal"] );
+        }
+            }
+*/
+
+        $rep = $this->annonceResource->delete($slug);
+        if ($rep) {
+            return $response->withJSON("deleted with success");
+        }else
+        return $response->withStatus(404, 'No annonce like that found.');
     }
 }

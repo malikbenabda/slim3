@@ -83,3 +83,11 @@ $container['App\Action\AnnonceAction'] = function ($c) {
     $annonceResource = new \App\Resource\AnnonceResource($c->get('em'));
     return new App\Action\AnnonceAction($annonceResource);
 };
+$container['App\Action\ImageAction'] = function ($c) {
+    $imageResource = new \App\Resource\ImageResource($c->get('em'));
+    return new App\Action\ImageAction($imageResource);
+};
+$container['App\Action\PersonneAction'] = function ($c) {
+    $personneResource = new \App\Resource\PersonneResource($c->get('em'));
+    return new App\Action\AnnonceAction($personneResource);
+};

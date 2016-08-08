@@ -14,6 +14,12 @@ $app->post('/api/signup', 'App\Action\UserAction:update');
 $app->post('/api/signin', 'App\Action\UserAction:login');
 
 
+// insert annonce
+$app->post('/api/AnnonceAdd', 'App\Action\AnnonceAction:add');
+// delete single annonce by idannonce
+$app->post('/api/AnnonceRemove', 'App\Action\AnnonceAction:remove');
+//  update annonce not working
+$app->post('/api/AnnonceUpdate', 'App\Action\AnnonceAction:update');
 
 // lister tout les annonces
 $app->post('/api/Annonces', 'App\Action\AnnonceAction:fetch');
@@ -22,15 +28,18 @@ $app->post('/api/Annonces', 'App\Action\AnnonceAction:fetch');
 $app->post('/api/Annonce', 'App\Action\AnnonceAction:fetchOne');
 
 //lister annonces with criterias ---- recherche par criteres
-$app->post('/api/AnnoncesC', 'App\Action\AnnonceAction:fetchSelected');
+$app->post('/api/AnnoncesSelect', 'App\Action\AnnonceAction:fetchSelected');
 //--------------------------------------------------------------------------------
 //***********************************************************************
 //*******************************Images ********************************
 //***********************************************************************
 
 // lister tout les images
-$app->post('/api/ImagesAll', 'App\Action\ImageAction:fetchAll');
+$app->get('/api/ImageAll', 'App\Action\ImageAction:fetchAll');
 // get one image by idimage
 $app->post('/api/Image', 'App\Action\ImageAction:fetchOne');
 //lister images with criterias ---- recherche par  data / type/ idannonce ...
 $app->post('/api/Images', 'App\Action\ImageAction:fetchSelected');
+// update /insert image
+$app->post('/api/imageUpdate', 'App\Action\ImageAction:updateImage');
+

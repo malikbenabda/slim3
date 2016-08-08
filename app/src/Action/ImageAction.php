@@ -1,15 +1,25 @@
 <?php
 namespace App\Action;
 
+use App\Entity\Image;
 use App\Resource\ImageResource;
+
+/*
+ * image Types  :
+ * 0  : profile image
+ * 1  : annonce cover image
+ * 2  : interior images of annonce
+ */
+
+
 
 final class ImageAction
 {
     private $imageResource;
 
-    public function __construct(ImageResource $resource)
+    public function __construct( ImageResource $imageResource)
     {
-        $this->imageResource = $resource;
+        $this->imageResource = $imageResource;
     }
 
 
@@ -69,9 +79,28 @@ final class ImageAction
 
     }
 
+    //insert if id not passed
+    public function updateImage($request, $response, $args)
+    {
+        $post = $request->getParsedBody();
 
+        $tmp= new Image();
 
+        if ( isset($post["idimage"]))           $key=array("idimage" =>$post["idimage"]);
 
+        if ( isset($post["src"]))     {$tmp->setSrc($post["src"]);}
+        if ( isset($post["tag"]))     {$tmp->setTag($post["tag"]);}
+        if ( isset($post["date"]))     {$tmp->setDate($post["date"]);}
+        if ( isset($post["type"]))     {$tmp->setType($post["type"]);}
+        if ( isset($post["title"]))     {$tmp->setTitle($post["title"]);}
+        if ( isset($post["annonceannonce"]))     {$tmp->setAnnonceannonce($post["annonceannonce"]);}
 
+        $rez=  $this->imageResource->update($tmp , $key = null);
+        if ( $rez)
+        return $response->withJSON(" update image success");
 
+        else return $response->withStatus(405, 'No idannonce was passed.');
+
+    }
 }
+
