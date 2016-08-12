@@ -65,7 +65,7 @@ final class ImageAction
         }
 
         if ( isset($post["annonceannonce"])){
-            $slug += array("annonceannonce" =>$post["annonceannonce"] );
+            $slug += array("idannonce" =>$post["idannonce"] );
         }
 
 
@@ -93,7 +93,7 @@ final class ImageAction
         if ( isset($post["date"]))     {$tmp->setDate($post["date"]);}
         if ( isset($post["type"]))     {$tmp->setType($post["type"]);}
         if ( isset($post["title"]))     {$tmp->setTitle($post["title"]);}
-        if ( isset($post["annonceannonce"]))     {$tmp->setAnnonceannonce($post["annonceannonce"]);}
+        if ( isset($post["idannonce"]))     {$tmp->setIdannonce($post["idannonce"]);}
 
         $rez=  $this->imageResource->update($tmp , $key = null);
         if ( $rez)

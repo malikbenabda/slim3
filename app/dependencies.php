@@ -91,3 +91,8 @@ $container['App\Action\PersonneAction'] = function ($c) {
     $personneResource = new \App\Resource\PersonneResource($c->get('em'));
     return new App\Action\AnnonceAction($personneResource);
 };
+
+$container['App\Action\ShortcollocationAction'] = function ($c) {
+    $shortcollocationResource = new \App\Resource\ShortcollocationResource($c->get('em'));
+    return new App\Action\ShortcollocationAction($shortcollocationResource);
+};

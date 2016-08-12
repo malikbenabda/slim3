@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Personne
  *
- * @ORM\Table(name="personne", uniqueConstraints={@ORM\UniqueConstraint(name="idpersonne_UNIQUE", columns={"idpersonne"})})
+ * @ORM\Table(name="personne", uniqueConstraints={@ORM\UniqueConstraint(name="idpersonne_UNIQUE", columns={"idpersonne"})}, indexes={@ORM\Index(name="fk_personne_collocation1_idx", columns={"idcollocation"})})
  * @ORM\Entity
  */
 class Personne
@@ -73,7 +73,7 @@ class Personne
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=45, nullable=false)
+     * @ORM\Column(name="type", type="string", length=45, nullable=true)
      */
     private $type;
 
@@ -148,34 +148,28 @@ class Personne
     private $noisy = '5';
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Collocation
      *
-     * @ORM\ManyToMany(targetEntity="Annonce", mappedBy="idowner")
+     * @ORM\ManyToOne(targetEntity="Collocation")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idcollocation", referencedColumnName="idcollocation")
+     * })
      */
-    private $idannonce;
+    private $idcollocation;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Annonce", inversedBy="idpersonnef")
-     * @ORM\JoinTable(name="personne_has_annoncefavorites",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idpersonneF", referencedColumnName="idpersonne")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idAnnonceF", referencedColumnName="idAnnonce")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Annonce", mappedBy="idpersonnefavorits")
      */
-    private $idannoncef;
+    private $idannoncefavorits;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idannonce = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idannoncef = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idannoncefavorits = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -622,70 +616,60 @@ class Personne
     }
 
     /**
-     * Add idannonce
+     * Set idcollocation
      *
-     * @param \Annonce $idannonce
+     * @param \Collocation $idcollocation
      *
      * @return Personne
      */
-    public function addIdannonce(\Annonce $idannonce)
+    public function setIdcollocation(\Collocation $idcollocation = null)
     {
-        $this->idannonce[] = $idannonce;
+        $this->idcollocation = $idcollocation;
 
         return $this;
     }
 
     /**
-     * Remove idannonce
+     * Get idcollocation
      *
-     * @param \Annonce $idannonce
+     * @return \Collocation
      */
-    public function removeIdannonce(\Annonce $idannonce)
+    public function getIdcollocation()
     {
-        $this->idannonce->removeElement($idannonce);
+        return $this->idcollocation;
     }
 
     /**
-     * Get idannonce
+     * Add idannoncefavorit
      *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIdannonce()
-    {
-        return $this->idannonce;
-    }
-
-    /**
-     * Add idannoncef
-     *
-     * @param \Annonce $idannoncef
+     * @param \Annonce $idannoncefavorit
      *
      * @return Personne
      */
-    public function addIdannoncef(\Annonce $idannoncef)
+    public function addIdannoncefavorit(\Annonce $idannoncefavorit)
     {
-        $this->idannoncef[] = $idannoncef;
+        $this->idannoncefavorits[] = $idannoncefavorit;
 
         return $this;
     }
 
     /**
-     * Remove idannoncef
+     * Remove idannoncefavorit
      *
-     * @param \Annonce $idannoncef
+     * @param \Annonce $idannoncefavorit
      */
-    public function removeIdannoncef(\Annonce $idannoncef)
+    public function removeIdannoncefavorit(\Annonce $idannoncefavorit)
     {
-        $this->idannoncef->removeElement($idannoncef);
+        $this->idannoncefavorits->removeElement($idannoncefavorit);
     }
 
     /**
-     * Get idannoncef
+     * Get idannoncefavorits
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getIdannoncef()
+    public function getIdannoncefavorits()
     {
-        return $this->idannoncef;
+        return $this->idannoncefavorits;
     }
 }

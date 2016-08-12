@@ -93,7 +93,7 @@ class ImageResource extends AbstractResource
         $tmp->setTitle($post->getTitle());
     }
     if ( $post->getAnnonceannonce()!==null){
-        $tmp->setAnnonceannonce($post->getAnnonceannonce());
+        $tmp->setIdannonce($post->getAnnonceannonce());
     }
 
     $this->entityManager->persist($tmp);

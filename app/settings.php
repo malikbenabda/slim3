@@ -28,7 +28,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => 'localhost',
-                'dbname'   => 'collocationdb',
+                'dbname'   => 'collocationbis',
                 'user'     => 'root',
                 'password' => '',
             ]

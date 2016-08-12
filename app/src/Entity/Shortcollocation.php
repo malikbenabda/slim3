@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Shortcollocation
  *
- * @ORM\Table(name="shortcollocation", uniqueConstraints={@ORM\UniqueConstraint(name="idshortCollocation_UNIQUE", columns={"idshortCollocation"})}, indexes={@ORM\Index(name="fk_shortCollocation_annonce1_idx", columns={"annonce_idAnnonce"}), @ORM\Index(name="fk_shortCollocation_personne1_idx", columns={"personne_idpersonne"})})
+ * @ORM\Table(name="shortcollocation", uniqueConstraints={@ORM\UniqueConstraint(name="idshortCollocation_UNIQUE", columns={"idshortCollocation"})}, indexes={@ORM\Index(name="fk_shortCollocation_annonce1_idx", columns={"idAnnonce"}), @ORM\Index(name="fk_shortCollocation_personne1_idx", columns={"idpersonne"})})
  * @ORM\Entity
  */
 class Shortcollocation
@@ -49,10 +49,10 @@ class Shortcollocation
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Annonce")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="annonce_idAnnonce", referencedColumnName="idAnnonce")
+     *   @ORM\JoinColumn(name="idAnnonce", referencedColumnName="idAnnonce")
      * })
      */
-    private $annonceannonce;
+    private $idannonce;
 
     /**
      * @var \Personne
@@ -61,10 +61,10 @@ class Shortcollocation
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Personne")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="personne_idpersonne", referencedColumnName="idpersonne")
+     *   @ORM\JoinColumn(name="idpersonne", referencedColumnName="idpersonne")
      * })
      */
-    private $personnepersonne;
+    private $idpersonne;
 
 
 
@@ -165,50 +165,50 @@ class Shortcollocation
     }
 
     /**
-     * Set annonceannonce
+     * Set idannonce
      *
-     * @param \Annonce $annonceannonce
+     * @param \Annonce $idannonce
      *
      * @return Shortcollocation
      */
-    public function setAnnonceannonce(\Annonce $annonceannonce)
+    public function setIdannonce(\Annonce $idannonce)
     {
-        $this->annonceannonce = $annonceannonce;
+        $this->idannonce = $idannonce;
 
         return $this;
     }
 
     /**
-     * Get annonceannonce
+     * Get idannonce
      *
      * @return \Annonce
      */
-    public function getAnnonceannonce()
+    public function getIdannonce()
     {
-        return $this->annonceannonce;
+        return $this->idannonce;
     }
 
     /**
-     * Set personnepersonne
+     * Set idpersonne
      *
-     * @param \Personne $personnepersonne
+     * @param \Personne $idpersonne
      *
      * @return Shortcollocation
      */
-    public function setPersonnepersonne(\Personne $personnepersonne)
+    public function setIdpersonne(\Personne $idpersonne)
     {
-        $this->personnepersonne = $personnepersonne;
+        $this->idpersonne = $idpersonne;
 
         return $this;
     }
 
     /**
-     * Get personnepersonne
+     * Get idpersonne
      *
      * @return \Personne
      */
-    public function getPersonnepersonne()
+    public function getIdpersonne()
     {
-        return $this->personnepersonne;
+        return $this->idpersonne;
     }
 }
