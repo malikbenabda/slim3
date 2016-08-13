@@ -24,7 +24,7 @@ $app->post('/api/AnnonceUpdate', 'App\Action\AnnonceAction:update');
 // lister tout les annonces
 $app->post('/api/Annonces', 'App\Action\AnnonceAction:fetch');
 
-// get one annonce with that criteria  or get the first one
+// get one annonce with idannonce or coords
 $app->post('/api/Annonce', 'App\Action\AnnonceAction:fetchOne');
 
 //lister annonces with criterias ---- recherche par criteres

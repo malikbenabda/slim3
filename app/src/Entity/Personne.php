@@ -1,4 +1,6 @@
 <?php
+namespace App\Entity;
+
 
 
 
@@ -7,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Personne
  *
- * @ORM\Table(name="personne", uniqueConstraints={@ORM\UniqueConstraint(name="idpersonne_UNIQUE", columns={"idpersonne"})}, indexes={@ORM\Index(name="fk_personne_collocation1_idx", columns={"idcollocation"})})
+ * @ORM\Table(name="personne", uniqueConstraints={@ORM\UniqueConstraint(name="idpersonne_UNIQUE", columns={"idpersonne"})})
  * @ORM\Entity
  */
 class Personne
@@ -148,16 +150,6 @@ class Personne
     private $noisy = '5';
 
     /**
-     * @var \Collocation
-     *
-     * @ORM\ManyToOne(targetEntity="Collocation")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idcollocation", referencedColumnName="idcollocation")
-     * })
-     */
-    private $idcollocation;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Annonce", mappedBy="idpersonnefavorits")
@@ -165,11 +157,27 @@ class Personne
     private $idannoncefavorits;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Collocation", inversedBy="idpersonne")
+     * @ORM\JoinTable(name="personne_has_collocation",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idpersonne", referencedColumnName="idpersonne")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idcollocation", referencedColumnName="idcollocation")
+     *   }
+     * )
+     */
+    private $idcollocation;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->idannoncefavorits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idcollocation = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -616,30 +624,6 @@ class Personne
     }
 
     /**
-     * Set idcollocation
-     *
-     * @param \Collocation $idcollocation
-     *
-     * @return Personne
-     */
-    public function setIdcollocation(\Collocation $idcollocation = null)
-    {
-        $this->idcollocation = $idcollocation;
-
-        return $this;
-    }
-
-    /**
-     * Get idcollocation
-     *
-     * @return \Collocation
-     */
-    public function getIdcollocation()
-    {
-        return $this->idcollocation;
-    }
-
-    /**
      * Add idannoncefavorit
      *
      * @param \Annonce $idannoncefavorit
@@ -672,4 +656,49 @@ class Personne
     {
         return $this->idannoncefavorits;
     }
+
+    /**
+     * Add idcollocation
+     *
+     * @param \Collocation $idcollocation
+     *
+     * @return Personne
+     */
+    public function addIdcollocation(\Collocation $idcollocation)
+    {
+        $this->idcollocation[] = $idcollocation;
+
+        return $this;
+    }
+
+    /**
+     * Remove idcollocation
+     *
+     * @param \Collocation $idcollocation
+     */
+    public function removeIdcollocation(\Collocation $idcollocation)
+    {
+        $this->idcollocation->removeElement($idcollocation);
+    }
+
+    /**
+     * Get idcollocation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdcollocation()
+    {
+        return $this->idcollocation;
+    }
+
+    /**
+     * Get array copy of object
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Entity;
+
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -211,4 +213,17 @@ class Shortcollocation
     {
         return $this->idpersonne;
     }
+
+
+
+    /**
+     * Get array copy of object
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
 }
