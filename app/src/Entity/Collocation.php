@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Collocation
  *
- * @ORM\Table(name="collocation", uniqueConstraints={@ORM\UniqueConstraint(name="idcollocation_UNIQUE", columns={"idcollocation"})}, indexes={@ORM\Index(name="fk_collocation_annonce1_idx", columns={"idAnnonceCollocation"})})
+ * @ORM\Table(name="collocation", uniqueConstraints={@ORM\UniqueConstraint(name="idcollocation_UNIQUE", columns={"idcollocation"})}, indexes={@ORM\Index(name="fk_collocation_annonce1_idx", columns={"idAnnonce"})})
  * @ORM\Entity
  */
 class Collocation
@@ -17,9 +17,16 @@ class Collocation
      *
      * @ORM\Column(name="idcollocation", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idcollocation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="string", length=45, nullable=true)
+     */
+    private $etat;
 
     /**
      * @var \DateTime
@@ -29,23 +36,23 @@ class Collocation
     private $datebegin;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="notes", type="string", length=500, nullable=true)
+     * @ORM\Column(name="dateEnd", type="date", nullable=true)
      */
-    private $notes;
+    private $dateend;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tasks", type="string", length=500, nullable=true)
+     * @ORM\Column(name="tasks", type="string", length=425, nullable=true)
      */
     private $tasks;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="bills", type="string", length=455, nullable=true)
+     * @ORM\Column(name="bills", type="string", length=245, nullable=true)
      */
     private $bills;
 
@@ -57,39 +64,30 @@ class Collocation
     private $reminder;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateEnd", type="date", nullable=true)
-     */
-    private $dateend;
-
-    /**
      * @var \Annonce
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Annonce")
+     * @ORM\ManyToOne(targetEntity="Annonce")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idAnnonceCollocation", referencedColumnName="idAnnonce")
+     *   @ORM\JoinColumn(name="idAnnonce", referencedColumnName="idAnnonce")
      * })
      */
-    private $idannoncecollocation;
-
-
+    private $idannonce;
 
     /**
-     * Set idcollocation
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @param integer $idcollocation
-     *
-     * @return Collocation
+     * @ORM\ManyToMany(targetEntity="Personne", mappedBy="idcollocation")
      */
-    public function setIdcollocation($idcollocation)
-    {
-        $this->idcollocation = $idcollocation;
+    private $idpersonne;
 
-        return $this;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idpersonne = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
 
     /**
      * Get idcollocation
@@ -99,6 +97,30 @@ class Collocation
     public function getIdcollocation()
     {
         return $this->idcollocation;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param string $etat
+     *
+     * @return Collocation
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return string
+     */
+    public function getEtat()
+    {
+        return $this->etat;
     }
 
     /**
@@ -126,27 +148,27 @@ class Collocation
     }
 
     /**
-     * Set notes
+     * Set dateend
      *
-     * @param string $notes
+     * @param \DateTime $dateend
      *
      * @return Collocation
      */
-    public function setNotes($notes)
+    public function setDateend($dateend)
     {
-        $this->notes = $notes;
+        $this->dateend = $dateend;
 
         return $this;
     }
 
     /**
-     * Get notes
+     * Get dateend
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getNotes()
+    public function getDateend()
     {
-        return $this->notes;
+        return $this->dateend;
     }
 
     /**
@@ -222,50 +244,73 @@ class Collocation
     }
 
     /**
-     * Set dateend
+     * Set idannonce
      *
-     * @param \DateTime $dateend
+     * @param \Annonce $idannonce
      *
      * @return Collocation
      */
-    public function setDateend($dateend)
+    public function setIdannonce(\Annonce $idannonce = null)
     {
-        $this->dateend = $dateend;
+        $this->idannonce = $idannonce;
 
         return $this;
     }
 
     /**
-     * Get dateend
-     *
-     * @return \DateTime
-     */
-    public function getDateend()
-    {
-        return $this->dateend;
-    }
-
-    /**
-     * Set idannoncecollocation
-     *
-     * @param \Annonce $idannoncecollocation
-     *
-     * @return Collocation
-     */
-    public function setIdannoncecollocation(\Annonce $idannoncecollocation)
-    {
-        $this->idannoncecollocation = $idannoncecollocation;
-
-        return $this;
-    }
-
-    /**
-     * Get idannoncecollocation
+     * Get idannonce
      *
      * @return \Annonce
      */
-    public function getIdannoncecollocation()
+    public function getIdannonce()
     {
-        return $this->idannoncecollocation;
+        return $this->idannonce;
     }
+
+    /**
+     * Add idpersonne
+     *
+     * @param \Personne $idpersonne
+     *
+     * @return Collocation
+     */
+    public function addIdpersonne(\Personne $idpersonne)
+    {
+        $this->idpersonne[] = $idpersonne;
+
+        return $this;
+    }
+
+    /**
+     * Remove idpersonne
+     *
+     * @param \Personne $idpersonne
+     */
+    public function removeIdpersonne(\Personne $idpersonne)
+    {
+        $this->idpersonne->removeElement($idpersonne);
+    }
+
+    /**
+     * Get idpersonne
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdpersonne()
+    {
+        return $this->idpersonne;
+    }
+
+    /**
+     * Get array copy of object
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
+
+
 }

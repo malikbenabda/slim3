@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Entity;
+
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -223,6 +225,13 @@ class Annonce
      * @ORM\Column(name="airConditioning", type="boolean", nullable=true)
      */
     private $airconditioning;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rating", type="integer", nullable=true)
+     */
+    private $rating;
 
     /**
      * @var \Personne
@@ -965,6 +974,30 @@ class Annonce
     }
 
     /**
+     * Set rating
+     *
+     * @param integer $rating
+     *
+     * @return Annonce
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
      * Set idowner
      *
      * @param \Personne $idowner
@@ -1021,4 +1054,17 @@ class Annonce
     {
         return $this->idpersonnefavorits;
     }
+
+
+
+    /**
+     * Get array copy of object
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
 }

@@ -78,6 +78,10 @@ $container['App\Action\ReservationAction'] = function ($c) {
     $reservationResource = new \App\Resource\ReservationResource($c->get('em'));
     return new App\Action\ReservationAction($reservationResource);
 };
+//*******************************************
+
+
+
 
 $container['App\Action\AnnonceAction'] = function ($c) {
     $annonceResource = new \App\Resource\AnnonceResource($c->get('em'));
