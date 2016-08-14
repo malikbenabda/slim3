@@ -18,7 +18,7 @@ $app->post('/api/signin', 'App\Action\UserAction:login');
 $app->post('/api/AnnonceAdd', 'App\Action\AnnonceAction:add');
 // delete single annonce by idannonce
 $app->post('/api/AnnonceRemove', 'App\Action\AnnonceAction:remove');
-//  update annonce not working
+//  update if idannonce is passed , else insert
 $app->post('/api/AnnonceUpdate', 'App\Action\AnnonceAction:update');
 
 // lister tout les annonces

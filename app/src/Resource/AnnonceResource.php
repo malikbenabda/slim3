@@ -59,17 +59,7 @@ class AnnonceResource extends AbstractResource
         return false;
     }
 
-    /**
-     * @param object $annonce
-     *
-     * @return boolean
-     */
-    public function insert($annonce)
-    {
-        $this->entityManager->persist($annonce);
-        $this->entityManager->flush();
-        return true;
-    }
+
     /**
      * @param object $annonce
      *
@@ -106,10 +96,65 @@ class AnnonceResource extends AbstractResource
         if ( $post->getPrixtotal()!==null){
             $tmp->setPrixtotal($post->getPrixtotal());
         }
-        if ( $post->getTitre()!==null){
-            $tmp->setTitre($post->getTitre());
-        }
 
+        //***************************
+        if ( $post->getIdowner()!==null){
+            $tmp->setIdowner($post->getIdowner());
+        }
+        if ( $post->getCentralheat()!==null){
+            $tmp->setCentralheat($post->getCentralheat());
+        }
+        if ( $post->getWifi()!==null){
+            $tmp->setWifi($post->getWifi());
+        }
+        if ( $post->getMicrowave()!==null){
+            $tmp->setMicrowave($post->getMicrowave());
+        }
+        if ( $post->getFridge()!==null){
+            $tmp->setFridge($post->getFridge());
+        }
+        if ( $post->getOven()!==null){
+            $tmp->setOven($post->getOven());
+        }
+        if ( $post->getBeds()!==null){
+            $tmp->setBeds($post->getBeds());
+        }
+        if ( $post->getGaz2ville()!==null){
+            $tmp->setGaz2ville($post->getGaz2ville());
+        }
+        if ( $post->getTerasse()!==null){
+            $tmp->setTerasse($post->getTerasse());
+        }
+        if ( $post->getBalcon()!==null){
+            $tmp->setBalcon($post->getBalcon());
+        }
+        if ( $post->getWashingmachine()!==null){
+            $tmp->setWashingmachine($post->getWashingmachine());
+        }
+        if ( $post->getClosets()!==null){
+            $tmp->setClosets($post->getClosets());
+        }
+        if ( $post->getTv()!==null){
+            $tmp->setTv($post->getTv());
+        }
+        if ( $post->getGarden()!==null){
+            $tmp->setGarden($post->getGarden());
+        }
+        if ( $post->getCookwares()!==null){
+            $tmp->setCookwares($post->getCookwares());
+        }
+        if ( $post->getAirconditioning()!==null){
+            $tmp->setAirconditioning($post->getAirconditioning());
+        }
+        if ( $post->getAnimals()!==null){
+            $tmp->setAnimals($post->getAnimals());
+        }
+        if ( $post->getGenderpreference()!==null){
+            $tmp->setGenderpreference($post->getGenderpreference());
+        }
+        if ( $post->getSmoking()!==null){
+            $tmp->setSmoking($post->getSmoking());
+        }
         $this->entityManager->persist($tmp);
         $this->entityManager->flush();
         return true;

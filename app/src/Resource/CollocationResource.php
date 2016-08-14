@@ -8,7 +8,7 @@ use App\Entity\Annonce;
  * Class Resource
  * @package App
  */
-class AnnonceResource extends AbstractResource
+class CollocationResource extends AbstractResource
 {
     /**
      * @param string|null $key

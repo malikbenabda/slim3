@@ -21,8 +21,6 @@ final class AnnonceAction
         return $response->withJSON($annonces);
 
     }
-
-
     //to get all annonces with that match the criterias
     public function fetchSelected($request, $response, $args)
     {
@@ -105,9 +103,7 @@ final class AnnonceAction
         if ( isset($post["cookwares"])){
             $slug += array("cookwares" =>$post["cookwares"] );
         }
-        if ( isset($post["airconditioning"])){
-            $slug += array("airconditioning" =>$post["airconditioning"] );
-        }
+
         if ( isset($post["animals"])){
             $slug += array("animals" =>$post["animals"] );
         }
@@ -121,18 +117,6 @@ final class AnnonceAction
         if ( isset($post["rating"])){
             $slug += array("rating" =>$post["rating"] );
         }
-        if ( isset($post["airconditioning"])){
-            $slug += array("airconditioning" =>$post["airconditioning"] );
-        }
-
-
-
-
-
-
-
-
-
 
         $annonces = $this->annonceResource->getSelected($slug);
         if ($annonces) {
@@ -156,6 +140,14 @@ final class AnnonceAction
             $slug += array("coords" =>$post["coords"] );
         }
 
+        if ( isset($post["titre"])){
+            $slug += array("titre" =>$post["titre"] );
+        }
+
+
+        if ( isset($post["idowner"])){
+            $slug += array("idowner" =>$post["idowner"] );
+        }
 
 
 
@@ -167,57 +159,14 @@ final class AnnonceAction
         return $response->withStatus(404, 'No annonces found.');
     }
 
-
-
-
-    public function add($request, $response, $args)
-    {
-        $post = $request->getParsedBody();
-        $tmp= new Annonce();
-
-        if ( isset($post["annoncestate"])){
-            $tmp->setAnnoncestate($post["annoncestate"]);
-        }
-        if ( isset($post["coords"])){
-            $tmp->setCoords($post["coords"]);
-        }
-        if ( isset($post["titre"])){
-            $tmp->setTitre($post["titre"]);
-        }
-        if ( isset($post["description"])){
-            $tmp->setDescription($post["description"]);
-        }
-        if ( isset($post["type"])){
-            $tmp->setType($post["type"]);
-        }
-        if ( isset($post["city"])){
-            $tmp->setCity($post["city"]);
-        }
-        if ( isset($post["rooms"])){
-            $tmp->setRooms($post["rooms"]);
-        }
-        if ( isset($post["prixtotal"])){
-            $tmp->setPrixtotal($post["prixtotal"]);
-        }
-        if ( isset($post["extra"])){
-            $tmp->setExtra($post["extra"]);
-        }
-
-        $this->annonceResource->insert($tmp);
-        return $response->withJSON("success");
-
-    }
-
-
-
     public function update($request, $response, $args)
     {
         $post = $request->getParsedBody();
         $tmp= new Annonce();
 
-        if ( isset($post["idannonce"])){
-        $tmp->setIdannonce($post["idannonce"]);
-        $key=array("idannonce" =>$post["idannonce"]);
+            if ( isset($post["idannonce"])){
+                $tmp->setIdannonce($post["idannonce"]);$key=array("idannonce" =>$post["idannonce"]);}
+
 
             if ( isset($post["annoncestate"])){
                 $tmp->setAnnoncestate($post["annoncestate"]);
@@ -240,13 +189,78 @@ final class AnnonceAction
             if ( isset($post["prixtotal"])){
                 $tmp->setPrixtotal($post["prixtotal"]);
             }
+//*****************************************************
+
+        if ( isset($post["idowner"])){
+            $tmp->setIdowner($post["idowner"]);
+        }
+        if ( isset($post["centralheat"])){
+            $tmp->setCentralheat($post["centralheat"]);
+        }
+        if ( isset($post["wifi"])){
+            $tmp->setWifi($post["wifi"]);
+        }
+        if ( isset($post["microwave"])){
+            $tmp->setMicrowave($post["microwave"]);
+        }
+        if ( isset($post["fridge"])){
+            $tmp->setFridge($post["fridge"]);
+        }
+        if ( isset($post["oven"])){
+            $tmp->setOven($post["oven"]);
+        }
+        if ( isset($post["beds"])){
+            $tmp->setBeds($post["beds"]);
+        }
+        if ( isset($post["gaz2ville"])){
+            $tmp->setGaz2ville($post["gaz2ville"]);
+        }
+        if ( isset($post["terasse"])){
+            $tmp->setTerasse($post["terasse"]);
+        }
+        if ( isset($post["balcon"])){
+            $tmp->setBalcon($post["balcon"]);
+        }
+        if ( isset($post["washingmachine"])){
+            $tmp->setWashingmachine($post["washingmachine"]);
+        }
+        if ( isset($post["closets"])){
+            $tmp->setClosets($post["closets"]);
+        }
+
+        if ( isset($post["tv"])){
+            $tmp->setTv($post["tv"]);
+        }
+        if ( isset($post["garden"])){
+            $tmp->setGarden($post["garden"]);
+        }
+
+        if ( isset($post["cookwares"])){
+            $tmp->setCookwares($post["cookwares"]);
+        }
+        if ( isset($post["airconditioning"])){
+            $tmp->setAirconditioning($post["airconditioning"]);
+        }
+
+        if ( isset($post["animals"])){
+            $tmp->setAnimals($post["animals"]);
+        }
+        if ( isset($post["genderpreference"])){
+            $tmp->setGenderpreference($post["genderpreference"]);
+        }
+
+        if ( isset($post["smoking"])){
+            $tmp->setSmoking($post["smoking"]);
+        }
+        if ( isset($post["rating"])){
+            $tmp->setRating($post["rating"]);
+        }
 
 
+        $this->annonceResource->update($tmp , $key= null);
+            return $response->withJSON(" update #"+post["idannonce"]+" success");
 
-            $this->annonceResource->update($tmp , $key= null);
-            return $response->withJSON(" update success");
-
-        }else {return $response->withStatus(405, 'No idannonce was passed.');}
+      return $response->withStatus(405, 'No idannonce was passed.');
 
 
 
@@ -261,33 +275,7 @@ final class AnnonceAction
             $slug = array("idannonce" =>$post["idannonce"] );
         } else  return $response->withStatus(405, 'No idannonce was passed.');
 
-       /*     {
 
-        if ( isset($post["annoncestate"])){
-            $slug += array("annoncestate" =>$post["annoncestate"] );
-        }
-
-        if ( isset($post["coords"])){
-            $slug += array("coords" =>$post["coords"] );
-        }
-
-        if ( isset($post["titre"])){
-            $slug += array("titre" =>$post["titre"] );
-        }
-        if ( isset($post["type"])){
-            $slug += array("type" =>$post["type"] );
-        }
-        if ( isset($post["city"])){
-            $slug += array("city" =>$post["city"] );
-        }
-        if ( isset($post["rooms"])){
-            $slug += array("rooms" =>$post["rooms"] );
-        }
-        if ( isset($post["prixtotal"])){
-            $slug += array("prixtotal" =>$post["prixtotal"] );
-        }
-            }
-*/
 
         $rep = $this->annonceResource->delete($slug);
         if ($rep) {

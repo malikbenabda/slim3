@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,9 +25,16 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="src", type="string", length=500, nullable=true)
+     * @ORM\Column(name="srchq", type="string", length=1000, nullable=true)
      */
-    private $src;
+    private $srchq;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="srclq", type="string", length=1000, nullable=true)
+     */
+    private $srclq;
 
     /**
      * @var string
@@ -81,27 +87,51 @@ class Image
     }
 
     /**
-     * Set src
+     * Set srchq
      *
-     * @param string $src
+     * @param string $srchq
      *
      * @return Image
      */
-    public function setSrc($src)
+    public function setSrchq($srchq)
     {
-        $this->src = $src;
+        $this->srchq = $srchq;
 
         return $this;
     }
 
     /**
-     * Get src
+     * Get srchq
      *
      * @return string
      */
-    public function getSrc()
+    public function getSrchq()
     {
-        return $this->src;
+        return $this->srchq;
+    }
+
+    /**
+     * Set srclq
+     *
+     * @param string $srclq
+     *
+     * @return Image
+     */
+    public function setSrclq($srclq)
+    {
+        $this->srclq = $srclq;
+
+        return $this;
+    }
+
+    /**
+     * Get srclq
+     *
+     * @return string
+     */
+    public function getSrclq()
+    {
+        return $this->srclq;
     }
 
     /**
@@ -223,16 +253,4 @@ class Image
     {
         return $this->idannonce;
     }
-
-
-    /**
-     * Get array copy of object
-     *
-     * @return array
-     */
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
-    }
-
 }
