@@ -1,13 +1,13 @@
 {
-    "name": "ServiceWeb/Ilyesscoiff",
+    "name": "ServiceWeb/Test",
     "description": "WebService",
     "license": "BSD-3-Clause",
     "type": "project",
     "keywords": ["slim-framework", "skeleton"],
     "authors": [
         {
-            "name": "achref",
-            "email": "bigshar@live.fr",
+            "name": "malik",
+            "email": "malik.benabda@gmail.com",
             "homepage": "--"
         }
     ],
